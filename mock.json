@@ -1,0 +1,17 @@
+{
+    "title": "This is an input json file example. Use this as a guideline",
+    "soldierData": [
+        {
+            "name": "Arik",
+            "address": "North Pole",
+            "pet": "Joey",
+            "rank": "General"
+        },
+        {
+            "name": "Aviram",
+            "address": "Texas",
+            "pet": "Rika",
+            "rank": "Admiral"
+        }
+    ]
+}
