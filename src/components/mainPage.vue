@@ -131,7 +131,10 @@ export default {
       console.log('request sent');
       try {
         const requestData = JSON.stringify(this.csvFiles);
-        axios.post('http://localhost:8000/api/people', requestData).then(response => {
+                // axios.post('http://localhost:8000/api/people', requestData).then(response => {
+
+        axios.post('https://ahgadolserver.herokuapp.com/api/people', requestData).then(response => {
+          
         this.readJsonFile(response);
       }).catch(err => {
         console.log('promise rejection err ', err);
