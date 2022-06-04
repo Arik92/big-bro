@@ -37,7 +37,15 @@
       </thead>
       <tbody>
         <tr v-for="soldier in jsonData" :key="soldier">
-          <td v-for="attribute in soldier" :key="attribute">{{ attribute }}</td>
+          <td v-for="attribute in soldier" :key="attribute">
+            <span v-if="attribute=='True'" class="icon check"> ✓ 
+              </span>
+              <span v-else-if="attribute=='False'" class="icon ex"> X
+              </span>
+              <span v-else>
+              {{ attribute }}
+              </span>
+            </td>
         </tr>
       </tbody>
     </table>
@@ -62,12 +70,21 @@
   height: 90%;
   width: 100%;
 }
+.icon {
+  font-size: 30px;
+}
+.check {
+    color: green;
+}
+.ex {
+    color: red;
+}
 </style>
 <script>
 import axios from "axios";
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 
 export default {
   name: "MainPage",
@@ -88,7 +105,6 @@ export default {
       let reader = new FileReader();
       reader.onload = (e) => {
         let json = JSON.parse(e.target.result);
-        console.log("parsed json ", json);
         this.jsonData = json.soldierData;
         this.tableHeaders = Object.keys(json.soldierData[0]);
       };
@@ -101,7 +117,6 @@ export default {
         const fields = line.split(","); // 3️⃣
         return Object.fromEntries(header.map((h, i) => [h, fields[i]])); // 4️⃣
       });
-      console.log("As JSON: ", output);
       return output;
     },
     onCsvUpload1(e) {
@@ -128,30 +143,29 @@ export default {
     },
     sendCsvFiles() {
       if (!this.csvFlags[0] || !this.csvFlags[1]) return;
-      console.log('request sent');
       try {
         const requestData = JSON.stringify(this.csvFiles);
                 // axios.post('http://localhost:8000/api/people', requestData).then(response => {
 
         axios.post('https://ahgadolserver.herokuapp.com/api/people', requestData).then(response => {
-          
-        this.readJsonFile(response);
+          const resDataObj = JSON.parse(response.data.results.soldiersMatch);
+          this.jsonData = resDataObj;
+          this.tableHeaders = Object.keys(resDataObj[0]);
+          console.log('parsed json obj ', resDataObj);
+          console.log("json data? ", this.jsonData);
+          console.log('table headers ', this.tableHeaders);
       }).catch(err => {
         console.log('promise rejection err ', err);
       })
       }
       catch(error) {
         console.log("POST error ", error);
-      }
-      
+      }      
     },
     onJsonUpload() {
       const jsonInput = this.$refs.file.files[0];
       this.readJsonFile(jsonInput);
-    },
-    
-  },
-  mounted() {
+    }    
   }
 };
 </script>

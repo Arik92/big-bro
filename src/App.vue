@@ -32,6 +32,9 @@ body {
   height: 90%;
   width: 90%;
   left: 5%;
-    background-image: url('~@/assets/sw1.jpg');
+  background-image: url('~@/assets/beach.jpg');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 </style>
