@@ -128,7 +128,7 @@ export default {
                this.csvFlags[0] = true;
                this.sendCsvFiles();
             }
-            reader.readAsText(file);      
+            reader.readAsText(file,"ISO-8859-8");      
     },
     onCsvUpload2(e) {
      const file = e.target.files[0];
@@ -139,7 +139,7 @@ export default {
                this.csvFlags[1] = true;
                this.sendCsvFiles();
             }
-            reader.readAsText(file);      
+            reader.readAsText(file,"ISO-8859-8");      
     },
     sendCsvFiles() {
       if (!this.csvFlags[0] || !this.csvFlags[1]) return;
