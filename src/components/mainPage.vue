@@ -147,7 +147,7 @@ export default {
         const requestData = JSON.stringify(this.csvFiles);
                 // axios.post('http://localhost:8000/api/people', requestData).then(response => {
 
-        axios.post('https://ahgadolserver.herokuapp.com/api/people', requestData).then(response => {
+        axios.post('https://web-production-b413.up.railway.app/api/people', requestData).then(response => {
           const resDataObj = JSON.parse(response.data.results.soldiersMatch);
           this.jsonData = resDataObj;
           this.tableHeaders = Object.keys(resDataObj[0]);
